@@ -52,7 +52,7 @@ rsync [options] source destination
 $ tree tests/
 tests/
 ├── 01
-│   └── 4.txt
+│   └── 4.txt
 ├── 1.txt
 ├── 2.txt
 └── 3.txt
@@ -112,7 +112,7 @@ $ tree backups/
 backups/
 └── tests
     ├── 01
-    │   └── 4.txt
+    │   └── 4.txt
     ├── 1.txt
     ├── 2.txt
     └── 3.txt
@@ -122,9 +122,9 @@ backups/
 
 #### IMPORTANT NOTE: 
 
-if you kept the forward slash `/` after the source directory - `source/` - it will sync its content only, but if you removed it `source` it will sync the entire directoy as we saw in the above example `tests` completely synced into `backups`.
+if you kept the forward slash `/` after the source directory - `source/` - it will sync its content only, but if you removed it `source` it will sync the entire directory as we saw in the above example `tests` completely synced into `backups`.
 
-#### You may only need to sync the content instead of sync the entire directory in this case you will append `/` to the source directory.
+You may only need to sync the content instead of sync the entire directory in this case you will append `/` to the source directory.
 
 ```bash
 $ rsync -rv tests/ backups/
@@ -143,7 +143,7 @@ total size is 0  speedup is 0.00
 $ tree backups/
 backups/
 ├── 01
-│   └── 4.txt
+│   └── 4.txt
 ├── 1.txt
 ├── 2.txt
 └── 3.txt
@@ -155,7 +155,7 @@ As you can see we synced only the content of the tests directory rather than syn
 
 ### PRO TIP: 
 
-You also use the `--dry-run` option or for short `-n` before performing the sync which will display the content to be synced, this is so handy as it will not perform actual syncing but instead will show the content to be synced.
+You may also use the `--dry-run` option or for short `-n` before performing the sync which will display the content to be synced, this is so handy as it will not perform the actual syncing but instead will show the content to be synced.
 
 #### NOTE: 
 
@@ -201,7 +201,7 @@ drwxr-xr-x 2 rakan rakan 4096 Jun  7 11:48 01
 -rw-r--r-- 1 rakan rakan    0 Jun  7 11:48 3.txt
 ```
 
-#### Here I've changed the permission for `1.txt` file to `777` just to illustrate the point. And I copied the content using the following command.
+#### Here We've changed the permission for `1.txt` file to `777` just to illustrate the point. And we copied the content using the following command.
 
 ```bash
 rsync -rv tests/ backups/
@@ -247,7 +247,7 @@ Now we got the desired output and we are satisfied ;)
 
 ---
 
-Suppose we changed/modified one or a couple of files it's insufficient to resync the entire directory/content. 
+Suppose we changed/modified one or a couple of files it's insufficient to re-sync the entire directory/content. 
 Instead we will use the `-u` option to sync/copy only the modified/newer files.
 
 Let's take our previous example:
@@ -256,7 +256,7 @@ Let's take our previous example:
 $ tree tests/
 tests/
 ├── 01
-│   └── 4.txt
+│   └── 4.txt
 ├── 1.txt
 ├── 2.txt
 ├── 3.txt
@@ -265,9 +265,9 @@ tests/
 1 directory, 5 files
 ```
 
-I've added one file, `4.txt`.
+We've added one file, `4.txt`.
 
-Now let's use `-u` and verify what is going to be synced/copied with dry-run `-n` of cource we will compair with checksum `-c` to be more precise ;)
+Now let's use `-u` and verify what is going to be synced/copied with dry-run `-n` of course we will compair based on checksum `-c` to be more precise ;)
 
 ```bash
 $ rsync -avunc tests/ backups/
@@ -300,7 +300,7 @@ rsync -av {tests/,/etc/passwd} backups/
 $ tree backups/
 backups/
 ├── 01
-│   └── 4.txt
+│   └── 4.txt
 ├── 1.txt
 ├── 2.txt
 ├── 3.txt
@@ -312,18 +312,18 @@ backups/
 
 ---
 
-sync certain extensions/files and ignore the others?
+How about sync certain extensions/files and ignore the others?
 
 In this case we will use `--include` with `--exclude` to get the job done.
 
-> Suppose we have the following hierarchy and I want to sync all files with `.pdf` extension and ignore anything else.
+> Suppose we have the following hierarchy and we want to sync all files with `.pdf` extension and ignore anything else.
 
 ```bash
 $ tree tests/
 tests/
 ├── 01
-│   ├── 4.txt
-│   └── book2.pdf
+│   ├── 4.txt
+│   └── book2.pdf
 ├── 1.txt
 ├── 2.txt
 ├── 3.txt
@@ -343,7 +343,7 @@ rsync -avm --include="*/" --include='*.pdf' --exclude='*' tests/ backups/
 $ tree backups/
 backups/
 ├── 01
-│   └── book2.pdf
+│   └── book2.pdf
 ├── blah.pdf
 ├── book1.pdf
 └── news.pdf
@@ -351,9 +351,9 @@ backups/
 1 directory, 4 files
 ```
 
-### We got the desired output but let's briefly explain the issued command.
+#### We got the desired output but let's briefly explain the issued command.
 
-* First, `-avm` a bunch of flags already known for you, the `-m` flag is to avoid go recursive in the empty directories. 
+* First, `-avm` a bunch of flags already known for you, the `-m` flag is to avoid going recursive in empty directories. 
 
 * Second, `--include="*/"` means go to the subdirectories in the source directory.
 
@@ -365,9 +365,9 @@ backups/
 
 ### Remotely:
 
-> Example: Copy file from your computer to remote server. 
+> Example: Copying file from your computer to remote server. 
 
-### Please note: 
+`Please note:`
 
 ssh/rsync daemon should be up and running on the server or on your computer if it was the dest.
 
@@ -375,7 +375,7 @@ ssh/rsync daemon should be up and running on the server or on your computer if i
 rsync -v localFile user@10.10.10.10:~/remoteFile
 ```
 
-`NOTE:` If you did not specify a location on the remote server. By default, it will be saved on the user's home directory.
+`NOTE:` If you did not specify a location on the remote server. By default, it will be saved/synced on the user's home directory.
 
 > Example:
 
@@ -383,9 +383,9 @@ rsync -v localFile user@10.10.10.10:~/remoteFile
 rsync -v localFile user@10.10.10.10: 
 ```
 
-Thus the file will be syned at `/home/user/`
+Thus, the file will be syned at `/home/user/`
 
-> Example: Copy file from remote server to your computer.
+> Example: Copying file from remote server to your computer.
 
 ```bash
 rsync -v user@10.10.10.10:~/remoteFile localFile 
@@ -397,27 +397,29 @@ rsync -v user@10.10.10.10:~/remoteFile localFile
 rsync -e 'ssh -p 1337' user@10.10.10.10:remoteFile localFile
 ```
 
-> Example: Sync entire directory's content. Progress and pratial enabled `-P` and only `-u`pdated files.
+> Example: Sync entire directories content. Progress and pratial enabled `-P` and only `-u`pdated files.
 
 ```bash
 rsync -urvP dirLocal/ user@10.10.10.10:~/backups/
 ```
 
-> Copy multiple files from remote server:
+> Copying multiple files from remote server:
 
 ```bash
 rsync -zavP user@10.10.10.10:{/etc/passwd,/etc/hostname,/var/www/html/index.php} dirLocal/
 ```
 
-### NOTE: 
+#### NOTE: 
 
-We used `-z` to compress the files in transmitting and save some bandwidth
+We used `-z` to compress the files in transmitting and save some bandwidth.
 
 ---
 
 #### Conclusion : 
 
-rsync is a powerful tool can be used in many situations, it is also recommended to dive and explore more about the tool, use it in combination with your scripts, make cronjobs, etc...
+rsync is a powerful tool can be used in many situations.
+
+It is also highly recommended to dive and explore more about the tool, use it in combination with other tools, automation,cronjobs, etc...
 
 [1.1]: http://i.imgur.com/wWzX9uB.png (twitter icon without padding)
 
@@ -428,3 +430,4 @@ If you have any doubts feel free to contact me on [![@R4kaaaN][1.1]][1] ;)
 ---
 
 EOF
+
